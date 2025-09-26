@@ -1,0 +1,51 @@
+{
+  "name": "project-with-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node ./dist/server.js",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http-status": "^2.1.0",
+    "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.6",
+    "socket.io": "^4.8.1",
+    "stripe": "^18.5.0",
+    "zod": "^3.25.61"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/nodemailer": "^7.0.1",
+    "eslint": "^9.14.0",
+    "globals": "^16.2.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
+  }
+}
