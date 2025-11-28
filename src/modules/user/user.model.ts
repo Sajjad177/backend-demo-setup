@@ -1,7 +1,8 @@
-import { model, Schema } from "mongoose";
-import { IUser, userModel } from "./user.interface";
-import config from "../../config";
 import bcrypt from "bcrypt";
+import { model, Schema } from "mongoose";
+import config from "../../config";
+import { applyEncryption } from "../../middleware/encryptionMiddleware";
+import { IUser, userModel } from "./user.interface";
 
 const userSchema = new Schema<IUser>(
   {
@@ -97,5 +98,7 @@ userSchema.statics.isUserExistById = async function (
 ): Promise<IUser | null> {
   return await User.findOne({ _id });
 };
+
+applyEncryption(userSchema, ["phone", "street", "location", "postalCode"]);
 
 export const User = model<IUser, userModel>("User", userSchema);

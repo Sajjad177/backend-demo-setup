@@ -1,16 +1,16 @@
-import { StatusCodes } from "http-status-codes";
-import AppError from "../../errors/AppError";
-import { IUser } from "./user.interface";
-import { User } from "./user.model";
 import bcrypt from "bcrypt";
-import sendEmail from "../../utils/sendEmail";
-import verificationCodeTemplate from "../../utils/verificationCodeTemplate";
-import { createToken } from "../../utils/tokenGenerate";
+import { StatusCodes } from "http-status-codes";
 import config from "../../config";
+import AppError from "../../errors/AppError";
 import {
   deleteFromCloudinary,
   uploadToCloudinary,
 } from "../../utils/cloudinary";
+import sendEmail from "../../utils/sendEmail";
+import { createToken } from "../../utils/tokenGenerate";
+import verificationCodeTemplate from "../../utils/verificationCodeTemplate";
+import { IUser } from "./user.interface";
+import { User } from "./user.model";
 
 const registerUser = async (payload: IUser) => {
   const existingUser = await User.isUserExistByEmail(payload.email);
@@ -198,7 +198,9 @@ const updateUserProfile = async (payload: any, email: string, file: any) => {
 
   const result = await User.findOneAndUpdate({ email }, updateData, {
     new: true,
-  });
+  }).select(
+    "-password -otp -otpExpires -resetPasswordOtp -resetPasswordOtpExpires"
+  );
 
   if (file && oldImagePublicId) {
     await deleteFromCloudinary(oldImagePublicId);

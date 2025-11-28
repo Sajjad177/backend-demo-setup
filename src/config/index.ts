@@ -28,4 +28,9 @@ export default {
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   },
+
+  security: {
+    AES_KEY: process.env.AES_KEY,
+    AES_IV: process.env.AES_IV,
+  },
 };
