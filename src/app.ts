@@ -1,14 +1,14 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, RequestHandler } from "express";
-import helmet from "helmet";
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import notFound from "./middleware/notFound";
 import router from "./router";
+import { applySecurity } from "./middleware/security";
 
 const app: Application = express();
 
-app.use(helmet());
+applySecurity(app);
 
 app.use(express.static("public"));
 
