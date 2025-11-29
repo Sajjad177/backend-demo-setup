@@ -1,8 +1,8 @@
+import compression from "compression";
 import { Application, NextFunction, Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
-import cors from "cors";
 import hpp from "hpp";
 import sendResponse from "../utils/sendResponse";
 
@@ -10,12 +10,13 @@ export const applySecurity = (app: Application) => {
   // 1. Helmet
   app.use(
     helmet({
-      contentSecurityPolicy: false, // allow localhost dev
+      contentSecurityPolicy: false,
     })
   );
 
   // 3. Prevent HTTP Parameter Pollution
   app.use(hpp());
+  app.use(compression()); //for faster response times and performance
 
   // 4. Rate Limiting
   app.use(
