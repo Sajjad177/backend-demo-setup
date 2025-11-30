@@ -31,7 +31,7 @@ app.use(cors(corsOptions));
 app.use("/api/v1", router);
 
 app.get("/", (req, res) => {
-  res.send("Hey there! I am working......");
+  res.send("Hey there! Welcome to our API.");
 });
 
 app.use(globalErrorHandler as unknown as RequestHandler);
