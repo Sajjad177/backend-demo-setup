@@ -1,2 +1,1 @@
-export const companyName = "Your Company Name";
- 
+export const companyName = "Change in lib -> globalType.ts";
