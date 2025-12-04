@@ -18,7 +18,7 @@ const registerUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "User created successfully, please verify your email",
+    message: "Account created successfully. Please verify your email.",
     data: {
       accessToken,
       user,
@@ -33,7 +33,7 @@ const verifyEmail = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Email verified successfully, you can login now",
+    message: "Email verified successfully. You can now log in.",
     data: result,
   });
 });
@@ -56,7 +56,7 @@ const getAllUsers = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Users fetched successfully",
+    message: "Users retrieved successfully.",
     data: result,
   });
 });
@@ -79,7 +79,7 @@ const getMyProfile = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "User fetched successfully",
+    message: "Your profile has been retrieved successfully.",
     data: result,
   });
 });
@@ -91,7 +91,7 @@ const updateUserProfile = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "User updated successfully",
+    message: "Your profile has been updated successfully.",
     data: result,
   });
 });

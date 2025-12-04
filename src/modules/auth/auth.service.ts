@@ -1,18 +1,22 @@
-import { StatusCodes } from "http-status-codes";
-import AppError from "../../errors/AppError";
-import { User } from "../user/user.model";
-import { createToken, verifyToken } from "../../utils/tokenGenerate";
-import config from "../../config";
 import bcrypt from "bcrypt";
-import sendEmail from "../../utils/sendEmail";
-import verificationCodeTemplate from "../../utils/verificationCodeTemplate";
+import { StatusCodes } from "http-status-codes";
+import config from "../../config";
+import AppError from "../../errors/AppError";
 import { companyName } from "../../lib/globalType";
+import sendEmail from "../../utils/sendEmail";
+import { createToken, verifyToken } from "../../utils/tokenGenerate";
+import verificationCodeTemplate from "../../utils/verificationCodeTemplate";
+import { User } from "../user/user.model";
 
 const login = async (payload: { email: string; password: string }) => {
   const { email, password } = payload;
 
   const user = await User.isUserExistByEmail(email);
-  if (!user) throw new AppError("User not found", StatusCodes.NOT_FOUND);
+  if (!user)
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   if (user.isVerified === false)
     throw new AppError("Please verify your email", StatusCodes.UNAUTHORIZED);
@@ -75,7 +79,7 @@ const refreshToken = async (token: string) => {
   const userData = await User.findOne({ email });
 
   if (!userData) {
-    throw new Error("User not found");
+    throw new Error("No account found with the provided credentials.");
   }
 
   const JwtPayload = {
@@ -98,7 +102,10 @@ const forgotPassword = async (email: string) => {
 
   const isExistingUser = await User.isUserExistByEmail(email);
   if (!isExistingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const hashedOtp = await bcrypt.hash(otp, 10);
@@ -137,7 +144,10 @@ const forgotPassword = async (email: string) => {
 const resendForgotOtpCode = async (email: string) => {
   const existingUser = await User.isUserExistByEmail(email);
   if (!existingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const hashedOtp = await bcrypt.hash(otp, 10);
@@ -167,7 +177,10 @@ const verifyOtp = async (email: string, otp: string) => {
 
   const isExistingUser = await User.isUserExistByEmail(email);
   if (!isExistingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   if (
     !isExistingUser.resetPasswordOtp ||
@@ -225,7 +238,10 @@ const resetPassword = async (
 
   const isExistingUser = await User.isUserExistByEmail(email);
   if (!isExistingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   const hashedPassword = await bcrypt.hash(
     payload.newPassword,
@@ -264,7 +280,10 @@ const changePassword = async (
 
   const isExistingUser = await User.isUserExistByEmail(email);
   if (!isExistingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   const isPasswordMatched = await User.isPasswordMatch(
     currentPassword,

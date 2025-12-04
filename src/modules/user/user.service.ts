@@ -93,7 +93,10 @@ const verifyEmail = async (email: string, payload: string) => {
 
   const existingUser = await User.findOne({ email });
   if (!existingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   if (!existingUser.otp || !existingUser.otpExpires) {
     throw new AppError("OTP not requested or expired", StatusCodes.BAD_REQUEST);
@@ -124,7 +127,10 @@ const verifyEmail = async (email: string, payload: string) => {
 const resendOtpCode = async (email: string) => {
   const existingUser = await User.findOne({ email });
   if (!existingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   if (existingUser.isVerified === true) {
     throw new AppError("User already verified", StatusCodes.CONFLICT);
@@ -166,7 +172,10 @@ const getAdminId = async () => {
 const getMyProfile = async (email: string) => {
   const existingUser = await User.findOne({ email });
   if (!existingUser)
-    throw new AppError("User not found", StatusCodes.NOT_FOUND);
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   const result = await User.findOne({ email }).select(
     "-password -otp -otpExpires -resetPasswordOtp -resetPasswordOtpExpires"
@@ -177,7 +186,11 @@ const getMyProfile = async (email: string) => {
 
 const updateUserProfile = async (payload: any, email: string, file: any) => {
   const user = await User.findOne({ email }).select("image");
-  if (!user) throw new AppError("User not found", StatusCodes.NOT_FOUND);
+  if (!user)
+    throw new AppError(
+      "No account found with the provided credentials.",
+      StatusCodes.NOT_FOUND
+    );
 
   // eslint-disable-next-line prefer-const
   let updateData: any = { ...payload };
