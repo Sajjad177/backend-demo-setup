@@ -1,1 +1,1 @@
-export const companyName = "Change in lib -> globalType.ts";
+export const companyName = "Change it -> lib -> globalType.ts";
