@@ -18,8 +18,8 @@ const globalLimiter = rateLimit({
 });
 
 export const loginLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: 5,
+  windowMs: 20 * 60 * 1000,
+  max: 20,
   standardHeaders: true,
   legacyHeaders: false,
   message: "Too many login attempts, try again later.",
@@ -116,7 +116,7 @@ export const applySecurity = (app: Application) => {
     const statusCode = err?.statusCode || err?.status || 500;
     const message =
       statusCode < 500
-        ? err?.message || "Bad request"
+        ? err?.message || "Bad request error (secure mode)"
         : "Internal server error (secure mode)";
 
     try {
