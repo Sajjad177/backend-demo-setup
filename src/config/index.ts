@@ -33,4 +33,5 @@ export default {
     AES_KEY: process.env.AES_KEY,
     AES_IV: process.env.AES_IV,
   },
+  allowedOrigins: (process.env.ALLOWED_ORIGINS || "")
 };

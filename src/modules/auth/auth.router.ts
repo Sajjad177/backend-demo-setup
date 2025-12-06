@@ -4,11 +4,13 @@ import validateRequest from "../../middleware/validateRequest";
 import { authValidationSchema } from "./auth.validation";
 import auth from "../../middleware/auth";
 import { USER_ROLE } from "../user/user.constant";
+import { loginLimiter } from "../../middleware/security";
 
 const router = Router();
 
 router.post(
   "/login",
+  loginLimiter,
   validateRequest(authValidationSchema.authValidation),
   authController.login
 );
