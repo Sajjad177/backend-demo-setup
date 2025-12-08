@@ -60,20 +60,15 @@ export const applySecurity = (app: Application) => {
     })
   );
 
-  // Prevent HTTP Parameter Pollution
   app.use(hpp());
 
-  // Compression
   app.use(compression());
 
-  // Body parsers with size limit
   app.use(express.json({ limit: "10kb" }));
   app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
-  // Mongo sanitize
   app.use(mongoSanitize());
 
-  // Input sanitizer (XSS protection)
   app.use((req: Request, _res: Response, next: NextFunction) => {
     if (req.body && typeof req.body === "object") {
       const clean = (obj: any) => {
