@@ -3,33 +3,38 @@ import mongoose from "mongoose";
 import { Server } from "socket.io";
 import app from "./app";
 import config from "./config";
+import logger from "./logger";
 import { initNotificationSocket } from "./socket/notification.service";
 
 async function main() {
   try {
     await mongoose.connect(config.mongodbUrl as string);
-    console.log("MongoDB connected successfully");
+    // console.log("MongoDB connected successfully");
+    logger.info("MongoDB connected successfully");
     const httpServer = http.createServer(app);
 
     const io = new Server(httpServer, {
       cors: {
-        origin: "*", 
+        origin: "*",
         methods: ["GET", "POST"],
       },
     });
 
     io.on("connection", (socket) => {
-      console.log("Client connected:", socket.id);
+      // console.log("Client connected:", socket.id);
+      logger.info(`Client connected: ${socket.id}`);
       socket.on("joinRoom", (userId) => socket.join(userId));
     });
 
     initNotificationSocket(io);
 
     httpServer.listen(config.port, () => {
-      console.log(`Server running on port ${config.port}`);
+      // console.log(`Server running on port ${config.port}`);
+      logger.info(`Server running on port ${config.port}`);
     });
-  } catch (error) {
-    console.error("Server failed to start:", error);
+  } catch (error: any) {
+    // console.error("Server failed to start:", error);
+    logger.error("Server failed to start:", error);
   }
 }
 
