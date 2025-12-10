@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import AppError from "../errors/AppError";
 import { StatusCodes } from "http-status-codes";
-import { verifyToken } from "../utils/tokenGenerate";
 import config from "../config";
+import AppError from "../errors/AppError";
+import logger from "../logger";
+import { verifyToken } from "../utils/tokenGenerate";
 
 const auth = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -22,8 +23,8 @@ const auth = (...roles: string[]) => {
       }
 
       next();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      logger.error("Authorization error:", error);
       throw new AppError("You are not authorized", StatusCodes.UNAUTHORIZED);
     }
   };
