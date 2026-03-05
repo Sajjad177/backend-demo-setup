@@ -8,8 +8,6 @@ import router from "./router";
 
 const app: Application = express();
 
-// applySecurity(app);
-
 app.use(express.static("public"));
 
 app.use(express.json());
